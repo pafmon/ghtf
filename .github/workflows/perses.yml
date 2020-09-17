@@ -19,6 +19,4 @@ jobs:
                 terraform_version: 0.12.25
 
             - run: terraform init
-            - run: terraform plan
-            - run: terraform apply -auto-approve
-            - run: terraform destroy -auto-approve
+            - run: pwd
