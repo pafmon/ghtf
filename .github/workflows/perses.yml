@@ -11,10 +11,20 @@ env:
   
 jobs:
 
-  setup:
+  test:
+      needs: build
       runs-on: ubuntu-latest
       steps:
         - uses: actions/checkout@v2
+
+        # Build
+        - name: "Build Android project"
+          uses: vgaidarji/android-github-actions-build@v1.0.1
+          with:
+            args: "./gradlew assembleDebug"
+        - run: ls -l ./app/build/outputs/apk/app-debug.apk
+
+        # Setup
         - name: Use Node.js 14.x
           uses: actions/setup-node@v1
           with:
@@ -28,5 +38,8 @@ jobs:
             npm start
 
         - run: tail -1 .perses-full.yml
+        
+        - run: cat .perses-credentials.yml
+        
           
               
