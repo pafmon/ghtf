@@ -15,7 +15,7 @@ jobs:
                 MY_SECRET: ${{ secrets.MY_SECRET }}
               run: |
                 ls -l
-                echo $MY_SECRET
+                echo "s="$MY_SECRET
                 echo "done."
               env:
                 MY_SECRET: ${{ secrets.MY_SECRET }}
