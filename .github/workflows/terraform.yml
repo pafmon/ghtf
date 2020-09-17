@@ -1,0 +1,16 @@
+name: Terraform deploy
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+    
+    steps:
+        - uses: actions/checkout@v2
+        - name: Simple check
+          run: |
+            ls -l
+            echo "done."
