@@ -7,7 +7,8 @@ on:
 env:
   AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
   AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
-  MY_SECRET: ${{ secrets.MY_SECRET }}
+  KEY_NAME: ${{ secrets.KEY_NAME }}
+  KEY_PEM: ${{ secrets.KEY_PEM }}
   
 jobs:
 
@@ -39,6 +40,7 @@ jobs:
         - run: tail -1 .perses-full.yml
         
         - run: cat .perses-credentials.yml
+        - run: cat .perses-key.pem
         
           
               
