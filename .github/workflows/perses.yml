@@ -62,10 +62,11 @@ jobs:
         - name: "Perses Setup"
           run: |       
             cd .perses_runner
-            node index -a setup -g ../.perses-full.yml -c ../.perses-credentials.yml -n .perses_test
+            node index -a setup -g ../.perses-full.yml -c ../.perses-credentials.yml -n perses_test
 
         - name: "Check perses_test folder"
           run: |       
-            cd .perses_test
+            cd .perses_runner/projects/perses_test
             find
+
   
