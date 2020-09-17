@@ -20,7 +20,7 @@ jobs:
         - uses: actions/github-script@v3
           id: set-result
           with:
-            script: return "Hello"
+            script: return Math.random().toString(36).substring(2,10)
             result-encoding: string
           
         - name: Get result
