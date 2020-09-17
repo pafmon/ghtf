@@ -1,0 +1,108 @@
+name: Perses Test
+
+on:
+  push:
+    branches: [ master ]
+
+env:
+  AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
+  AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
+  KEY_NAME: ${{ secrets.KEY_NAME }}
+  KEY_PEM: ${{ secrets.KEY_PEM }}  
+  
+jobs:
+
+  test:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v2
+
+        # Build
+        - name: "Build Android project"
+          uses: vgaidarji/android-github-actions-build@v1.0.1
+          with:
+            args: "./gradlew assembleDebug"
+        - run: ls -l ./app/build/outputs/apk/app-debug.apk
+
+        # Build Perses config
+        - name: Use Node.js 14.x
+          uses: actions/setup-node@v1
+          with:
+            node-version: 14.x
+
+        - name: "Config setup"
+          run: |       
+            npx degit perses-org/gha .perses_gha
+            cd .perses_gha/setup
+            npm install
+            npm start
+
+        - name: Check apk path configured
+          run: tail -1 .perses-full.yml
+        
+        - name: Check setup
+          run: |
+            cat .perses-credentials.yml
+            ls -l .perses-key.pem
+        
+        # Get Perser Runner
+        - name: Get Perses Runner
+          uses: actions/checkout@v2
+          with:
+            repository: perses-org/perses
+            token: ${{ secrets.PERSES_PAT }}
+            path: .perses_runner
+
+        - name: "Install dependences"
+          run: |       
+            cd .perses_runner
+            npm install
+        
+        # Run Perses test
+        - name: Use Terraform 0.12.25
+          uses: hashicorp/setup-terraform@v1
+          with:
+            terraform_version: 0.12.25
+
+        - name: "Perses Setup"
+          run: |       
+            cd .perses_runner
+            node index -a setup -g ../.perses-full.yml -c ../.perses-credentials.yml -n perses_test
+
+        - name: "Check perses_test folder"
+          run: |       
+            cd .perses_runner/projects/perses_test
+            find
+
+        - name: "Perses Launch Infrastructure"
+          run: |       
+            cd .perses_runner
+            node index -a launch -n perses_test
+
+        - name: "Perses Test"
+          run: |       
+            cd .perses_runner
+            node index -a tests -n perses_test
+  
+        - name: "Perses Destroy Infrastructure"
+          run: |       
+            cd .perses_runner
+            node index -a destroy -n perses_test
+
+        # Check logs
+        - name: "Check logs"
+          run: |       
+            ls -l .perses_runner/projects/perses_test/logs/
+
+        # Gather Test Result
+        - name: "Gather Test Results"
+          run: |       
+            tail -7 .perses_runner/projects/perses_test/logs/test1.txt > .perses-result.txt
+  
+        # Check Perses Result
+        - name: "Check test result"
+          run: |       
+            cd .perses_gha/check
+            npm install
+            npm start
+
