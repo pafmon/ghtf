@@ -10,10 +10,10 @@ jobs:
     
         steps:
             - uses: actions/checkout@v2
-            - name: npm install and build webpack
+            - name: Check
               run: |
-                npm install
-                npm run build
+                ls -l
+                echo "done."
 
 
         
