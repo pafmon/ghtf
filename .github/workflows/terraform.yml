@@ -17,9 +17,6 @@ jobs:
                 ls -l
                 echo "s="$MY_SECRET
                 echo "done."
-              env:
-                MY_SECRET: ${{ secrets.MY_SECRET }}
-
             - uses: hashicorp/setup-terraform@v1
               with:
                 terraform_version: 0.12.25
