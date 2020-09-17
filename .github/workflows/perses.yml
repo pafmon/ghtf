@@ -17,14 +17,15 @@ jobs:
       steps:
         - uses: actions/checkout@v2
 
-        - uses: actions/github-script@v3
+        - name: Generate Perses Test Project Id
+          uses: actions/github-script@v3
           id: generate-project-id
           with:
-            script: return (new Date()).toISOString().replace(/(T|Z|:|\.)/g,'-').slice(0,-1)
+            script: return (new Date()).toISOString().replace(/(T|:|\.)/g,'-').slice(0,-1)
             result-encoding: string
           
-        - name: Get result
-          run: echo "Project ID <${{steps.generate-project-id.outputs.result}}>"        
+        - name: Check Perses Test Project Id
+          run: echo "Perses Test Project ID <${{steps.generate-project-id.outputs.result}}>"        
         
         # Build
         - name: "Build Android project"
@@ -105,8 +106,10 @@ jobs:
 
         # Gather Test Result
         - name: "Gather Test Results"
-          run: |       
+          run: |     
+            cat .perses_runner/projects/${{steps.generate-project-id.outputs.result}}/logs/test1.txt  
             tail -7 .perses_runner/projects/${{steps.generate-project-id.outputs.result}}/logs/test1.txt > .perses-result.json
+            cat .perses-result.json
   
         # Check Perses Result
         - name: "Check test result"
