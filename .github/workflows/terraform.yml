@@ -11,12 +11,20 @@ jobs:
         steps:
             - uses: actions/checkout@v2
             - name: Check
+              env:
+                MY_SECRET: ${{ secrets.MY_SECRET }}
               run: |
                 ls -l
+                echo $MY_SECRET
                 echo "done."
+              env:
+                MY_SECRET: ${{ secrets.MY_SECRET }}
+
             - uses: hashicorp/setup-terraform@v1
               with:
                 terraform_version: 0.12.25
                 run: terraform init
-
-        
+              env:
+                AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
+                AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
+    
