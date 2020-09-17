@@ -55,13 +55,16 @@ jobs:
             npm install
         
         # Run Perses test
+        - uses: hashicorp/setup-terraform@v1
+          with:
+            terraform_version: 0.12.25
 
         - name: "Perses Setup"
           run: |       
             cd .perses_runner
-            npm start -a setup -g ../.perses-full.yaml -c ../.perses-credentials.yaml -n .perses_test
+            node index -a setup -g ../.perses-full.yaml -c ../.perses-credentials.yaml -n .perses_test
 
-        - name: "Perses Setup"
+        - name: "Check perses_test folder"
           run: |       
             cd .perses_test
             find
