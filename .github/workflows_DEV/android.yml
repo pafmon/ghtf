@@ -8,7 +8,6 @@ jobs:
     build:
         runs-on: ubuntu-latest
 
-
         steps:
             - uses: actions/checkout@v2 
             - name: "Build Android project"
@@ -16,4 +15,4 @@ jobs:
               with:
                 args: "./gradlew assembleDebug"
             - run: ls -l ./app/build/outputs/apk/app-debug.apk             
-            
+    
