@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "253590328600",
+    "firebase_url": "https://heatmap-mobilecentric.firebaseio.com",
+    "project_id": "heatmap-mobilecentric",
+    "storage_bucket": "heatmap-mobilecentric.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:253590328600:android:a7e51d740b78eb83",
+        "android_client_info": {
+          "package_name": "es.unex.geoapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "253590328600-82mhj8930t4gor4k9futkp6uke9869lj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "es.unex.geoapp",
+            "certificate_hash": "02f3ff38883de21b778e17fb4f27710e27a42ece"
+          }
+        },
+        {
+          "client_id": "253590328600-i9p14o4br9kdu1fod1ohq3de7mlivbdu.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAOqGCOX5c8lA8Ty80rjlscMywVxERxtO4"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "253590328600-i9p14o4br9kdu1fod1ohq3de7mlivbdu.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

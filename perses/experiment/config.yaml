@@ -26,9 +26,6 @@ volume_size: "20"
 
 ######### Environment Configuration #########
 
-#APK path
-apk_path: "/home/pafmon/devel/github/perses/test/app-debug.apk"
-
 #Numbers of Android devices to deploy
 number_devices: "2"
 
