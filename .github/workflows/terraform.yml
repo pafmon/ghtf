@@ -11,9 +11,12 @@ jobs:
         steps:
             - uses: actions/checkout@v2
             - name: Check
-              run: |
-                ls -l
-                echo "done."
-
+                run: |
+                    ls -l
+                    echo "done."
+            - uses: hashicorp/setup-terraform@v1
+                with:
+                    terraform_version: 0.12.25
+                    run: terraform init
 
         
