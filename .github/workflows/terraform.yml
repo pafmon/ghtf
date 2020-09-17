@@ -7,37 +7,18 @@ on:
 jobs:
     deploy:
         runs-on: ubuntu-latest
-    
+
+        env:
+          AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
+          AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
+
         steps:
-            - uses: actions/checkout@v2
-            - name: Checking environment
-              run: |
-                ls -l
-                echo "done."
-            
+            - uses: actions/checkout@v2            
             - uses: hashicorp/setup-terraform@v1
               with:
                 terraform_version: 0.12.25
-            - name: "Initializing terraform"
-              run: terraform init
-
-            - name: "Terraform plan"
-              run: 
-                    terraform plan
-              env:
-                AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
-                AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
-
-            - name: "Terraform apply"
-              run: 
-                    terraform apply -auto-approve
-              env:
-                AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
-                AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
-      
-            - name: "Terraform apply"
-              run: 
-                    terraform apply -auto-approve
-              env:
-                AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
-                AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
+                
+            - run: terraform init
+            - run: terraform plan
+            - run: terraform apply -auto-approve
+            - run: terraform destroy -auto-approve
