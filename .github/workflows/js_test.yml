@@ -1,14 +1,15 @@
-name: Android build
+name: Perses Test
 
 on:
   push:
     branches: [ master ]
 
+env:
+  AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
+  AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
+  MY_SECRET: ${{ secrets.MY_SECRET }}
+  
 jobs:
-  env:
-    AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
-    AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
-    MY_SECRET: ${{ secrets.MY_SECRET }}
 
   setup:
       runs-on: ubuntu-latest
