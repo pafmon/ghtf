@@ -13,7 +13,13 @@ jobs:
             uses: actions/setup-node@v1
             with:
               node-version: 14.x
-          - run: |       
+
+          - name: "Run setup"
+            run: |       
               npx degit perses-org/gha .perses_gha
-              node .perses_gha/scripts/setup.js
+              cd .perses_gha/setup
+              npm install
+              npm start
+
+          - run: tail -1 .perses-full.yml
               
