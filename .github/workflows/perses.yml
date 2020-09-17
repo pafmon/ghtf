@@ -17,6 +17,15 @@ jobs:
       steps:
         - uses: actions/checkout@v2
 
+        - uses: actions/github-script@v3
+          id: generate-project-id
+          with:
+            script: return (new Date()).toISOString().replace(/(T|Z|:|\.)/g,'-').slice(0,-1)
+            result-encoding: string
+          
+        - name: Get result
+          run: echo "Project ID <${{steps.generate-project-id.outputs.result}}>"        
+        
         # Build
         - name: "Build Android project"
           uses: vgaidarji/android-github-actions-build@v1.0.1
@@ -67,37 +76,37 @@ jobs:
         - name: "Perses Setup"
           run: |       
             cd .perses_runner
-            node index -a setup -g ../.perses-full.yml -c ../.perses-credentials.yml -n perses_test
+            node index -a setup -g ../.perses-full.yml -c ../.perses-credentials.yml -n ${{steps.generate-project-id.outputs.result}}
 
-        - name: "Check perses_test folder"
+        - name: "Check project folder"
           run: |       
-            cd .perses_runner/projects/perses_test
+            cd .perses_runner/projects/${{steps.generate-project-id.outputs.result}}
             find
 
         - name: "Perses Launch Infrastructure"
           run: |       
             cd .perses_runner
-            node index -a launch -n perses_test
+            node index -a launch -n ${{steps.generate-project-id.outputs.result}}
 
         - name: "Perses Test"
           run: |       
             cd .perses_runner
-            node index -a tests -n perses_test
+            node index -a tests -n ${{steps.generate-project-id.outputs.result}}
   
         - name: "Perses Destroy Infrastructure"
           run: |       
             cd .perses_runner
-            node index -a destroy -n perses_test
+            node index -a destroy -n ${{steps.generate-project-id.outputs.result}}
 
         # Check logs
         - name: "Check logs"
           run: |       
-            ls -l .perses_runner/projects/perses_test/logs/
+            ls -l .perses_runner/projects/${{steps.generate-project-id.outputs.result}}/logs/
 
         # Gather Test Result
         - name: "Gather Test Results"
           run: |       
-            tail -7 .perses_runner/projects/perses_test/logs/test1.txt > .perses-result.txt
+            tail -7 .perses_runner/projects/${{steps.generate-project-id.outputs.result}}/logs/test1.txt > .perses-result.json
   
         # Check Perses Result
         - name: "Check test result"

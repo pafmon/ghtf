@@ -97,7 +97,7 @@ jobs:
         # Gather Test Result
         - name: "Gather Test Results"
           run: |       
-            tail -7 .perses_runner/projects/perses_test/logs/test1.txt > .perses-result.txt
+            tail -7 .perses_runner/projects/perses_test/logs/test1.txt > .perses-result.json
   
         # Check Perses Result
         - name: "Check test result"
