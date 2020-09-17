@@ -21,9 +21,6 @@ jobs:
             - name: "Initializing terraform"
               run: terraform init
 
-            - uses: hashicorp/setup-terraform@v1
-              with:
-                  terraform_version: 0.12.25
             - name: "Terraform plan"
               run: 
                     terraform plan
@@ -31,9 +28,6 @@ jobs:
                 AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
                 AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
 
-            - uses: hashicorp/setup-terraform@v1
-              with:
-                  terraform_version: 0.12.25
             - name: "Terraform apply"
               run: 
                     terraform apply -auto-approve
@@ -41,3 +35,9 @@ jobs:
                 AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
                 AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
       
+            - name: "Terraform apply"
+              run: 
+                    terraform apply -auto-approve
+              env:
+                AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
+                AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
