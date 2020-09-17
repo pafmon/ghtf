@@ -8,7 +8,7 @@ env:
   AWS_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
   AWS_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
   KEY_NAME: ${{ secrets.KEY_NAME }}
-  KEY_PEM: ${{ secrets.KEY_PEM }}
+  KEY_PEM: ${{ secrets.KEY_PEM }}  
   
 jobs:
 
@@ -24,7 +24,7 @@ jobs:
             args: "./gradlew assembleDebug"
         - run: ls -l ./app/build/outputs/apk/app-debug.apk
 
-        # Setup
+        # Build Perses config
         - name: Use Node.js 14.x
           uses: actions/setup-node@v1
           with:
@@ -40,7 +40,28 @@ jobs:
         - run: tail -1 .perses-full.yml
         
         - run: cat .perses-credentials.yml
-        - run: cat .perses-key.pem
+        - run: ls -l .perses-key.pem
         
-          
-              
+        # Get Perser Runner
+        - uses: actions/checkout@v2
+          with:
+            repository: perses-org/perses
+            token: ${{ secrets.PERSES_PAT }}
+            path: .perses_runner
+
+        - name: "Install dependences"
+          run: |       
+            cd .perses_runner
+            npm install
+        
+        # Run Perses test
+
+        - name: "Perses Setup"
+          run: |       
+            cd .perses_runner
+            npm start -a setup -g ../.perses-full.yaml -c ../.perses-credentials.yaml -n .perses_test
+
+        - name: "Perses Setup"
+          run: |       
+            cd .perses_test
+            find
