@@ -1,4 +1,4 @@
-name: Terraform deploy test
+name: Perses Test
 
 on:
   push:
