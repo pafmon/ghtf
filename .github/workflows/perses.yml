@@ -34,87 +34,87 @@ jobs:
             args: "./gradlew assembleDebug"
         - run: ls -l ./app/build/outputs/apk/debug/app-debug.apk
 
-        # # Build Perses config
-        # - name: Use Node.js 14.x
-        #   uses: actions/setup-node@v1
-        #   with:
-        #     node-version: 14.x
+        # Build Perses config
+        - name: Use Node.js 14.x
+          uses: actions/setup-node@v1
+          with:
+            node-version: 14.x
 
-        # - name: "Config setup"
-        #   run: |       
-        #     npx degit perses-org/gha .perses_gha
-        #     cd .perses_gha/setup
-        #     npm install
-        #     npm start
+        - name: "Config setup"
+          run: |       
+            npx degit perses-org/gha .perses_gha
+            cd .perses_gha/setup
+            npm install
+            npm start
 
-        # - name: Check apk path configured
-        #   run: tail -1 .perses-full.yml
+        - name: Check apk path configured
+          run: tail -1 .perses-full.yml
         
-        # - name: Check setup
-        #   run: |
-        #     cat .perses-credentials.yml
-        #     ls -l .perses-key.pem
+        - name: Check setup
+          run: |
+            cat .perses-credentials.yml
+            ls -l .perses-key.pem
         
-        # # Get Perser Runner
-        # - name: Get Perses Runner
-        #   uses: actions/checkout@v2
-        #   with:
-        #     repository: perses-org/perses
-        #     token: ${{ secrets.PERSES_PAT }}
-        #     path: .perses_runner
+        # Get Perser Runner
+        - name: Get Perses Runner
+          uses: actions/checkout@v2
+          with:
+            repository: perses-org/perses
+            token: ${{ secrets.PERSES_PAT }}
+            path: .perses_runner
 
-        # - name: "Install dependences"
-        #   run: |       
-        #     cd .perses_runner
-        #     npm install
+        - name: "Install dependences"
+          run: |       
+            cd .perses_runner
+            npm install
         
-        # # Run Perses test
-        # - name: Use Terraform 0.12.25
-        #   uses: hashicorp/setup-terraform@v1
-        #   with:
-        #     terraform_version: 0.12.25
+        # Run Perses test
+        - name: Use Terraform 0.12.25
+          uses: hashicorp/setup-terraform@v1
+          with:
+            terraform_version: 0.12.25
 
-        # - name: "Perses Setup"
-        #   run: |       
-        #     cd .perses_runner
-        #     node index -a setup -g ../.perses-full.yml -c ../.perses-credentials.yml -n ${{steps.generate-project-id.outputs.result}}
+        - name: "Perses Setup"
+          run: |       
+            cd .perses_runner
+            node index -a setup -g ../.perses-full.yml -c ../.perses-credentials.yml -n ${{steps.generate-project-id.outputs.result}}
 
-        # - name: "Check project folder"
-        #   run: |       
-        #     cd .perses_runner/projects/${{steps.generate-project-id.outputs.result}}
-        #     find
+        - name: "Check project folder"
+          run: |       
+            cd .perses_runner/projects/${{steps.generate-project-id.outputs.result}}
+            find
 
-        # - name: "Perses Launch Infrastructure"
-        #   run: |       
-        #     cd .perses_runner
-        #     node index -a launch -n ${{steps.generate-project-id.outputs.result}}
+        - name: "Perses Launch Infrastructure"
+          run: |       
+            cd .perses_runner
+            node index -a launch -n ${{steps.generate-project-id.outputs.result}}
 
-        # - name: "Perses Test"
-        #   run: |       
-        #     cd .perses_runner
-        #     node index -a tests -n ${{steps.generate-project-id.outputs.result}}
+        - name: "Perses Test"
+          run: |       
+            cd .perses_runner
+            node index -a tests -n ${{steps.generate-project-id.outputs.result}}
   
-        # - name: "Perses Destroy Infrastructure"
-        #   run: |       
-        #     cd .perses_runner
-        #     node index -a destroy -n ${{steps.generate-project-id.outputs.result}}
+        - name: "Perses Destroy Infrastructure"
+          run: |       
+            cd .perses_runner
+            node index -a destroy -n ${{steps.generate-project-id.outputs.result}}
 
-        # # Check logs
-        # - name: "Check logs"
-        #   run: |       
-        #     ls -l .perses_runner/projects/${{steps.generate-project-id.outputs.result}}/logs/
+        # Check logs
+        - name: "Check logs"
+          run: |       
+            ls -l .perses_runner/projects/${{steps.generate-project-id.outputs.result}}/logs/
 
-        # # Gather Test Result
-        # - name: "Gather Test Results"
-        #   run: |     
-        #     cat .perses_runner/projects/${{steps.generate-project-id.outputs.result}}/logs/test1.txt  
-        #     tail -7 .perses_runner/projects/${{steps.generate-project-id.outputs.result}}/logs/test1.txt > .perses-result.json
-        #     cat .perses-result.json
+        # Gather Test Result
+        - name: "Gather Test Results"
+          run: |     
+            cat .perses_runner/projects/${{steps.generate-project-id.outputs.result}}/logs/test1.txt  
+            tail -7 .perses_runner/projects/${{steps.generate-project-id.outputs.result}}/logs/test1.txt > .perses-result.json
+            cat .perses-result.json
   
-        # # Check Perses Result
-        # - name: "Check test result"
-        #   run: |       
-        #     cd .perses_gha/check
-        #     npm install
-        #     npm start
+        # Check Perses Result
+        - name: "Check test result"
+          run: |       
+            cd .perses_gha/check
+            npm install
+            npm start
 
