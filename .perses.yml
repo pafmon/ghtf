@@ -69,3 +69,10 @@ tests:
 
 
 max_avg: 1200
+
+
+
+######### Custom Tests Configuration #########
+# Custom test should be in "./tests/perses"
+
+max_avg_devices: 30

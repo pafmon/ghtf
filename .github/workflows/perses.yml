@@ -112,9 +112,22 @@ jobs:
             cat .perses-result.json
   
         # Check Perses Result
-        - name: "Check test result"
+        - name: "Check perses test result"
           run: |       
             cd .perses_gha/check
             npm install
             npm start
 
+        # Setup Custom Test
+        - name: "Setup Custom Test"
+          run: |       
+            cp  .perses-full.yml .perses_runner/projects/${{steps.generate-project-id.outputs.result}}/logs/perses-config.yml
+            cd ./tests/perses
+            npm install
+
+        # Run Custom Test
+        - name: "Run Custom Test"
+          run: |       
+            cd  .perses_runner/projects/${{steps.generate-project-id.outputs.result}}/logs
+            pwd ../../../../
+            node ../../../../tests/perses
