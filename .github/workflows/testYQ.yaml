@@ -18,7 +18,7 @@ jobs:
         - name: "Setup parser for custom tests"
           run: |       
             sudo apt-get install python3-setuptools  
-            pip3 install yq
+            sudo pip3 install yq
 
         # sudo apt-get update
         # sudo apt-get install python3-pip
