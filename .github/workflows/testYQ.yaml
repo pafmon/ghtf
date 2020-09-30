@@ -1,0 +1,30 @@
+name: YQTest
+
+on:
+  push:
+    branches: [ master ]
+
+  
+jobs:
+
+  test:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v2
+
+            
+        
+        # Setup parser for custom tests
+        - name: "Setup parser for custom tests"
+          run: |       
+            sudo apt-get update
+            sudo apt-get install python3-pip
+            sudo apt-get install jq
+            pip3 install yq
+
+
+        # Setup Custom Test
+        - name: "Setup Custom Test"
+          run: |       
+            ls ./`cat .perses.yml | yq .custom_test | tr -d '"'`
+
