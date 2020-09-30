@@ -119,7 +119,7 @@ jobs:
             npm start
             
         
-        # Setup parser for custom tests
+        # Setup yq parser for obtaing custom tests path
         - name: "Setup parser for custom tests"
           run: |       
             sudo apt-get install python3-setuptools  

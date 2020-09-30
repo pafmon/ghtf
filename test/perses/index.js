@@ -41,19 +41,27 @@ const fileStream = fs.createReadStream(resultFileName);
 //Heatmap-Log
 readInterface.on('line', function(line) {
     lineSplit = line.split(",");
-    values += Number(lineSplit[lineSplit.length-1]);
-    items++;
+    var value = Number(lineSplit[lineSplit.length-1]);
+    if(Number.isNaN(value)){
+      console.log("Skiping wrong log line: <"+line+"> -> splited: ["+lineSplit+"], value: ["+value+"]");
+    }else{
+      values += value;
+      items++;
+    }
 });
 
 readInterface.on('close', function(){
     avg = Number((values/items).toFixed(3));
     
-    if (avg > config.max_avg_devices){
-        console.error("TEST FAILED: result_device1 > max_avg_devices --> "+avg+ " > "+config.max_avg_devices);
+    if(Number.isNaN(avg)){
+      console.error("TEST FAILED: result_device1_avg is NaN");
+      process.exit(1);
+    } else if (avg > config.max_avg_devices){
+        console.error("TEST FAILED: result_device1_avg > max_avg_devices --> "+avg+ " > "+config.max_avg_devices);
         process.exit(1);
-      }else{
-        console.log("TEST PASSED: result_device1 > max_avg_devices --> "+avg+ " > "+config.max_avg_devices);
-      }
+    }else{
+        console.log("TEST PASSED: result_device1 < max_avg_devices --> "+avg+ " > "+config.max_avg_devices);
+    }
 });
 
 
