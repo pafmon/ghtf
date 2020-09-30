@@ -118,16 +118,26 @@ jobs:
             npm install
             npm start
             
+        
+        # Setup parser for custom tests
+        - name: "Setup parser for custom tests"
+          run: |       
+            sudo apt-get update
+            sudo apt-get install python3-pip
+            sudo apt-get install jq
+            pip3 install yq
+
 
         # Setup Custom Test
         - name: "Setup Custom Test"
           run: |       
             cp  .perses-full.yml .perses_runner/projects/${{steps.generate-project-id.outputs.result}}/logs/perses-config.yml
-            cd ./tests/perses
+            ls ./`cat .perses.yml | yq .custom_test | tr -d '"'`
+            cd ./`cat .perses.yml | yq .custom_test | tr -d '"'`
             npm install
 
         # Run Custom Test
         - name: "Run Custom Test"
           run: |       
             cd  .perses_runner/projects/${{steps.generate-project-id.outputs.result}}/logs
-            node ../../../../tests/perses
+            node ../../../../`cat perses-config.yml | yq .custom_test | tr -d '"'`
