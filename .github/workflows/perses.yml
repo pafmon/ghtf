@@ -130,7 +130,4 @@ jobs:
         - name: "Run Custom Test"
           run: |       
             cd  .perses_runner/projects/${{steps.generate-project-id.outputs.result}}/logs
-            realpath ../../../../
-            sudo apt-get install tree
-            tree
             node ../../../../tests/perses

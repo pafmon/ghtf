@@ -16,7 +16,7 @@ var config = {};
 
 //Load first device log file
 
-var resultFileName = rootPath+"/devices-logs/output-log-android1.txt";
+var resultFileName = rootPath+"/devices-logs/log-android1.txt";
 
 console.log("Loading Perses Config ("+configFileName+").");
 try {
