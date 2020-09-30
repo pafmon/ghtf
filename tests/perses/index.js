@@ -51,6 +51,8 @@ readInterface.on('close', function(){
     if (avg > config.max_avg_devices){
         console.error("TEST FAILED: result_device1 > max_avg_devices --> "+avg+ " > "+config.max_avg_devices);
         process.exit(1);
+      }else{
+        console.log("TEST PASSED: result_device1 > max_avg_devices --> "+avg+ " > "+config.max_avg_devices);
       }
 });
 
