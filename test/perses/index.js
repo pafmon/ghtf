@@ -3,8 +3,6 @@ const readline = require('readline');
 const path = require('path');
 const yaml = require('js-yaml');
 
-values=0
-items=0
 
 ////////////// LOAD PERSES CONFIGURATION FILE ///////////////////
 
@@ -38,13 +36,21 @@ const fileStream = fs.createReadStream(resultFileName);
     console: false
 });
 
+var values=0
+var items=0
+var badLines = 0;
+var totalLines = 0;
+
 //Heatmap-Log
 readInterface.on('line', function(line) {
+    totalLines++;
     lineSplit = line.split(",");
     var value = Number(lineSplit[lineSplit.length-1]);
     if(Number.isNaN(value)){
-      console.log("Skiping wrong log line: <"+line+"> -> splited: ["+lineSplit+"], value: ["+value+"]");
+        badLines++;
+        //console.log("Skiping wrong log line: <"+line+"> -> splited: ["+lineSplit+"], value: ["+value+"]");
     }else{
+      console.log("Good log line: <"+line+"> -> splited: ["+lineSplit+"], value: ["+value+"] from a total of "+items);
       values += value;
       items++;
     }
@@ -52,6 +58,7 @@ readInterface.on('line', function(line) {
 
 readInterface.on('close', function(){
     avg = Number((values/items).toFixed(3));
+    console.log("Total Lines: "+totalLines+" Bad log lines: "+badLines+" Good log lines: "+items);
     
     if(Number.isNaN(avg)){
       console.error("TEST FAILED: result_device1_avg is NaN");
