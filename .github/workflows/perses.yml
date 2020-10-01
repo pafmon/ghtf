@@ -103,6 +103,7 @@ jobs:
         - name: "Check logs"
           run: |       
             ls -l .perses_runner/projects/${{steps.generate-project-id.outputs.result}}/logs/
+            ls -l .perses_runner/projects/${{steps.generate-project-id.outputs.result}}/logs/devices-logs
 
         # Gather Test Result
         - name: "Gather Test Results"
