@@ -74,4 +74,4 @@ max_avg: 100000
 custom_test: test/perses
 
 ######### Custom Tests Configuration #########
-max_avg_devices: 3000
+max_avg_devices: 4000
