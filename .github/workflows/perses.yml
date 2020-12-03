@@ -60,7 +60,6 @@ jobs:
           uses: actions/checkout@v2
           with:
             repository: perses-org/perses
-            token: ${{ secrets.PERSES_PAT }}
             path: .perses_runner
 
         - name: "Install dependences"
